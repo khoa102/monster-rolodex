@@ -7,9 +7,9 @@ class App extends Component {
         super();
 
         this.state = {
-            monsters: []
+            monsters: [],
+            searchedStr: '',
         };
-        this._monsters = []
         console.log("constructor");
     }
 
@@ -18,32 +18,31 @@ class App extends Component {
         fetch("https://jsonplaceholder.typicode.com/users")
             .then(response => response.json())
             .then(users => {
-                this._monsters = users;
-                this.setState({monsters: this._monsters}, () => console.log(this.state));
+                this.setState({monsters: users}, () => console.log(this.state));
             });
+    }
+
+    onSearchChange = (event) => {
+        const searchedStr = event.target.value.toLowerCase()
+        this.setState({searchedStr});
     }
 
     render() {
         console.log("render");
+        const filteredMonsters = this.state.monsters.filter(monster => {
+            return monster.name.toLowerCase().includes(this.state.searchedStr);
+        })
+
         return (
             <div className="App">
                 <input
                     className="search-box"
                     type='search'
                     placeholder='Search monsters'
-                    onChange={(event) => {
-                        const searchedStr = event.target.value.toLowerCase();
-                        const filteredMonsters = this._monsters.filter(monster => {
-                            return monster.name.toLowerCase().includes(searchedStr);
-                        })
-
-                        this.setState(() => {
-                            return {monsters: filteredMonsters};
-                        })
-                    }
-                }/>
+                    onChange={this.onSearchChange}
+                />
                 {
-                    this.state.monsters.map((monster) => {
+                    filteredMonsters.map((monster) => {
                         return <div key={monster.id}><h1>{monster.name}</h1></div>;
                     })
                 }
