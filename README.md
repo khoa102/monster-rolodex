@@ -1,5 +1,10 @@
-# Getting Started with Create React App
+# Monster Rolodex
 
+## What is this project?
+This is a React project that is build to learn basic concept of React. The project is also hosted on https://khoa102.github.io/monster-rolodex/
+
+-----
+# # Getting Started with Create React App
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
